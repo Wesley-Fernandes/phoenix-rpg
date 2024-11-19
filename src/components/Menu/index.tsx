@@ -16,7 +16,7 @@ export default function Menu() {
         <CardTitle>Manual da comunidade</CardTitle>
         <div className='h-28 w-full border-4'>
           <img
-            className="h-28 w-full object-cover"
+            className="h-full w-full object-cover"
             src="https://giffiles.alphacoders.com/219/219090.gif"
             alt="manual-header"
           />
