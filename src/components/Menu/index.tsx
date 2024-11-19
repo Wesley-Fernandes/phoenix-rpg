@@ -14,7 +14,7 @@ export default function Menu() {
     <Card className="sm:max-w-96 h-fit">
       <CardHeader>
         <CardTitle>Manual da comunidade</CardTitle>
-        <div className='h-28 w-full border-4'>
+        <div className="h-28 w-full border-4">
           <img
             className="h-full w-full object-cover"
             src="https://giffiles.alphacoders.com/219/219090.gif"
