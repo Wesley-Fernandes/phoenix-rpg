@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 export default function page() {
   const { back } = useRouter();
   return (
-    <main className="screen flex items-center justify-center">
+    <main className="screen flex items-center justify-center p-1">
       <Card className="w-80">
         <CardHeader>
           <CardTitle className="font-bold uppercase text-blue-600">

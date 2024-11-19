@@ -12,7 +12,7 @@ export function ProfileBackpack({ id }: { id: string }) {
       <AccordionTrigger className="font-black uppercase">
         Mochila - 1/5
       </AccordionTrigger>
-      <AccordionContent className="grid grid-cols-4">
+      <AccordionContent className="grid grid-cols-3 sm:grid-cols-4">
         <ProfileBackpackItem id={id} />
       </AccordionContent>
     </AccordionItem>

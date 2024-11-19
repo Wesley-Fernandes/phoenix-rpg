@@ -6,20 +6,11 @@ import { ArrowLeft } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 
 export default function Page() {
-  const { eqpId, id } = useParams();
+  const { eqpId, id }: { eqpId: string; id: string } = useParams();
   const equipament = equipament_list.filter((item) => item.id === eqpId)[0];
-  const { push } = useRouter();
-  const goBack = () => {
-    push(`/profile/${id}`);
-  };
   return (
-    <main className="screen p-1 flex flex-col sm:items-center justify-center">
-      <div className="sm:w-96 py-1">
-        <Button size="icon" onClick={goBack}>
-          <ArrowLeft />
-        </Button>
-      </div>
-      <Equipament equipament={equipament} />
+    <main className="screen p-1 flex sm:items-center justify-center overflow-y-auto">
+      <Equipament equipament={equipament} id={id} />
     </main>
   );
 }
