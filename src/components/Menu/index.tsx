@@ -14,11 +14,13 @@ export default function Menu() {
     <Card className="sm:max-w-96 h-fit">
       <CardHeader>
         <CardTitle>Manual da comunidade</CardTitle>
-        <img
-          className="border-4"
-          src="https://giffiles.alphacoders.com/219/219090.gif"
-          alt=""
-        />
+        <div className='h-28 w-full border-4'>
+          <img
+            className="h-28 w-full object-cover"
+            src="https://giffiles.alphacoders.com/219/219090.gif"
+            alt="manual-header"
+          />
+        </div>
         <CardDescription className="text-center">
           Clique em um dos menus abaixos para abrir suas opções. Posteriormente
           clique em uma delas para ser redirecionado.
