@@ -14,6 +14,7 @@ import { Accordion } from '../ui/accordion';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import { ArrowLeft, User } from 'lucide-react';
+import { Badge } from '../ui/badge';
 
 export default function Profile({ id }: { id: string }) {
   const { back, push } = useRouter();
@@ -21,9 +22,12 @@ export default function Profile({ id }: { id: string }) {
     push('/');
   };
   return (
-    <Card className="w-full sm:max-w-96 h-fit">
+    <Card className="w-full sm:max-w-96 h-fit mt-4">
       <CardHeader>
-        <CardTitle>Guts</CardTitle>
+        <CardTitle className="flex items-center w-full justify-between">
+          Guts
+          <Badge className="bg-green-500 uppercase font-black">Aprovado</Badge>
+        </CardTitle>
         <div className="h-28 w-full border-4">
           <img
             className="h-full w-full object-cover"
