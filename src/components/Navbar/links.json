@@ -1,0 +1,22 @@
+{
+  "authenticated": [
+    {
+      "label": "Minhas fichas",
+      "href": "/record"
+    },
+    {
+      "label": "Minhas notificações",
+      "href": "/notifications"
+    }
+  ],
+  "unauthenticated": [
+    {
+      "label": "Registrar-se",
+      "href": "/sign-up"
+    },
+    {
+      "label": "Conectar-se",
+      "href": "/sign-in"
+    }
+  ]
+}

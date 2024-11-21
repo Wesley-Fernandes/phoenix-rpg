@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Sheet,
   SheetContent,
@@ -9,6 +8,9 @@ import {
 } from '@/components/ui/sheet';
 import { Button } from '../ui/button';
 import { Menu } from 'lucide-react';
+import { ThemeSwitcher } from '../Theme/ThemeSwitcher';
+import User from './User';
+import Links from './Links';
 
 export function NavbarMenus() {
   return (
@@ -20,11 +22,18 @@ export function NavbarMenus() {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Menu logado</SheetTitle>
+          <SheetTitle>Menu</SheetTitle>
           <SheetDescription>
-            Quando você está logado, têm acesso a esse menu.
+            Mantenha-se conectado para acessar todas funcionalidades.
           </SheetDescription>
         </SheetHeader>
+        <div>
+          <Links />
+          <div className="flex gap-2 flex-col">
+            <ThemeSwitcher />
+            <User />
+          </div>
+        </div>
       </SheetContent>
     </Sheet>
   );

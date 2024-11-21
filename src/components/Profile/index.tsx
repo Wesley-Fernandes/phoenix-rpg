@@ -11,10 +11,10 @@ import { ProfileEquipament } from './ProfileEquipament';
 import { ProfileBackpack } from './ProfileBackpack';
 import { useRouter } from 'next/navigation';
 import { Accordion } from '../ui/accordion';
-import Link from 'next/link';
-import { Button } from '../ui/button';
-import { ArrowLeft, User } from 'lucide-react';
+import { Button, buttonVariants } from '../ui/button';
+import { User } from 'lucide-react';
 import { Badge } from '../ui/badge';
+import Link from 'next/link';
 
 export default function Profile({ id }: { id: string }) {
   const { back, push } = useRouter();
@@ -48,15 +48,12 @@ export default function Profile({ id }: { id: string }) {
         </Accordion>
       </CardHeader>
       <CardFooter className="flex items-center justify-end">
-        <Button
-          onClick={goToCreator}
-          variant="outline"
-          size="icon"
-          title="Ir para criador"
-          disabled
+        <Link
+          href="http://aminoapps.com/p/hswe22"
+          className={buttonVariants({ variant: 'outline', size: 'icon' })}
         >
           <User />
-        </Button>
+        </Link>
       </CardFooter>
     </Card>
   );
