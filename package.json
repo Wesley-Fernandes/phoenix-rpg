@@ -5,8 +5,9 @@
   "scripts": {
     "lint": "onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}",
     "dev": "next dev --turbopack",
-    "build": "next build",
     "start": "next start",
+    "postinstall": "prisma generate",
+    "build": "prisma generate",
     "format": "prettier --write ."
   },
   "dependencies": {
