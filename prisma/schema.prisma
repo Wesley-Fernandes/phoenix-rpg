@@ -1,0 +1,60 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum BLOG_TYPE {
+  SISTEMA
+  PLATAFORMA
+  EVENTO
+  AVISO
+}
+
+enum PERMISSION_LEVEL{
+  ADMIN
+  MODERATOR
+}
+
+model Staff {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId   String   @unique
+  name      String
+  permission PERMISSION_LEVEL @default(MODERATOR)
+}
+
+model Blog {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  category  BLOG_TYPE @default(AVISO)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  content   String
+  creatorId String
+  comments  Comment[] @relation("BlogComments")
+}
+
+model Recruitment {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  creatorAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  creatorId   String
+  aminoLink   String
+  questions   String[]
+  comment     String
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  authorId  String
+  authorName String
+  contentId String   @db.ObjectId
+  blog      Blog     @relation("BlogComments", fields: [contentId], references: [id])
+}

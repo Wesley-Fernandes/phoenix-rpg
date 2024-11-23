@@ -2,11 +2,31 @@
   "authenticated": [
     {
       "label": "Minhas fichas",
-      "href": "/record"
+      "href": "/user/record"
     },
     {
       "label": "Minhas notificações",
-      "href": "/notifications"
+      "href": "/user/notifications"
+    },
+    {
+      "label": "Fazer recrutamento",
+      "href": "/user/recruitment"
+    }
+  ],
+  "MODERATOR": [
+    {
+      "label": "Administrar fichas",
+      "href": "/admin/record"
+    }
+  ],
+  "ADMINISTRATOR": [
+    {
+      "label": "Administrar recrutamento",
+      "href": "/admin/recruitment"
+    },
+    {
+      "label": "Administrar staff",
+      "href": "/admin/staff"
     }
   ],
   "unauthenticated": [

@@ -1,0 +1,16 @@
+export const races = [
+  { value: 'humano', label: 'Humano' },
+  { value: 'elfo', label: 'Elfo' },
+  { value: 'demonio', label: 'Demônio' },
+  { value: 'anjo', label: 'Anjo' },
+  { value: 'anão', label: 'Anão' },
+  { value: 'orcs', label: 'Orc' },
+  { value: 'dragao', label: 'Dragão' },
+  { value: 'vampiro', label: 'Vampiro' },
+  { value: 'lobo', label: 'Lobo' },
+  { value: 'fada', label: 'Fada' },
+  { value: 'goblin', label: 'Goblin' },
+  { value: 'elfo_negro', label: 'Elfo Negro' },
+  { value: 'troll', label: 'Troll' },
+  { value: 'slimer', label: 'Slimer' },
+].sort((a, b) => a.label.localeCompare(b.label));

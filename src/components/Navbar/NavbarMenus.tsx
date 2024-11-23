@@ -1,7 +1,6 @@
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -22,10 +21,7 @@ export function NavbarMenus() {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Menu</SheetTitle>
-          <SheetDescription>
-            Mantenha-se conectado para acessar todas funcionalidades.
-          </SheetDescription>
+          <SheetTitle className="hidden">Menu</SheetTitle>
         </SheetHeader>
         <div>
           <Links />
