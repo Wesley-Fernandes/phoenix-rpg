@@ -1,17 +1,15 @@
-import { NextResponse } from 'next/server';
 import { getAuth } from '@clerk/nextjs/server';
 import database from '@/lib/prisma';
-import { NextApiRequest } from 'next';
-import parser from '@/lib/api-tool';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(request: NextApiRequest) {
+export async function POST(request: NextRequest) {
   try {
     const { userId } = getAuth(request);
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { aminoLink, questions, comment } = await parser(request.body);
+    const { aminoLink, questions, comment } = await request.json();
 
     const recruitment = await database.recruitment.create({
       data: {
@@ -32,7 +30,7 @@ export async function POST(request: NextApiRequest) {
   }
 }
 
-export async function GET(request: NextApiRequest) {
+export async function GET(request: NextRequest) {
   try {
     const { userId } = getAuth(request);
 
@@ -56,7 +54,7 @@ export async function GET(request: NextApiRequest) {
   }
 }
 
-export async function DELETE(request: NextApiRequest) {
+export async function DELETE(request: NextRequest) {
   try {
     const { userId } = getAuth(request);
     if (!userId) {

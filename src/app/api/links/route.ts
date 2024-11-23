@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import links from '@/components/Navbar/links.json';
-import { PrismaClient } from '@prisma/client';
 import database from '@/lib/prisma';
 import { auth } from '@clerk/nextjs/server';
 

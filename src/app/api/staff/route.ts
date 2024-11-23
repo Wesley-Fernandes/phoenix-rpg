@@ -1,6 +1,5 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { getAuth } from '@clerk/nextjs/server';
-import { NextApiRequest } from 'next';
 import database from '@/lib/prisma';
 import parser from '@/lib/api-tool';
 
@@ -11,7 +10,7 @@ async function isAdmin(userId: string) {
   return staff?.permission === 'ADMIN';
 }
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
   try {
     const { userId } = getAuth(req);
     if (!userId || !(await isAdmin(userId))) {
@@ -29,7 +28,7 @@ export async function GET(req: NextApiRequest) {
   }
 }
 
-export async function POST(req: NextApiRequest) {
+export async function POST(req: NextRequest) {
   try {
     /*
     const { userId } = getAuth(req)
@@ -38,8 +37,7 @@ export async function POST(req: NextApiRequest) {
     }
     */
 
-    const body = await parser(req.body);
-    console.log(body);
+    const body = await req.json();
     const { name, permission, userId } = body;
     const staff = await database.staff.create({
       data: { userId, name, permission },
@@ -54,14 +52,14 @@ export async function POST(req: NextApiRequest) {
   }
 }
 
-export async function PUT(req: NextApiRequest) {
+export async function PUT(req: NextRequest) {
   try {
     const { userId } = getAuth(req);
     if (!userId || !(await isAdmin(userId))) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id, name, permission } = await req.body;
+    const { id, name, permission } = await req.json();
     const staff = await database.staff.update({
       where: { id },
       data: { name, permission },
@@ -76,14 +74,14 @@ export async function PUT(req: NextApiRequest) {
   }
 }
 
-export async function DELETE(req: NextApiRequest) {
+export async function DELETE(req: NextRequest) {
   try {
     const { userId } = getAuth(req);
     if (!userId || !(await isAdmin(userId))) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { id } = await req.body;
+    const { id } = await req.json();
     await database.staff.delete({ where: { id } });
     return NextResponse.json({ message: 'staff member deleted successfully' });
   } catch (error) {
