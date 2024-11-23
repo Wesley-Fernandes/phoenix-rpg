@@ -21,12 +21,10 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-  CardFooter,
 } from '@/components/ui/card';
-import { toast } from '@/hooks/use-toast';
-import prisma from '@/lib/prisma';
 import { Input } from '@/components/ui/input';
-import { useAuth } from '@clerk/nextjs';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   question1: z.string().min(10, {
@@ -74,6 +72,7 @@ const formSchema = z.object({
 
 export default function RecruitmentForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { push } = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -110,15 +109,15 @@ export default function RecruitmentForm() {
         'Content-Type': 'application/json',
       },
     });
-    toast({
-      title: 'Formulário enviado',
-      description:
-        'Obrigado por sua candidatura. Entraremos em contato em breve.',
-    });
+
+    toast.success(
+      'Obrigado por sua candidatura. Entraremos em contato em breve.'
+    );
 
     setTimeout(() => {
       setIsSubmitting(false);
-    }, 3000);
+      push('/');
+    }, 2000);
   }
 
   const questions = [

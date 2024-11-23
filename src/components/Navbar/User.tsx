@@ -37,7 +37,6 @@ export default function User() {
     new QueryCache().clear();
   };
 
-
   return (
     <div>
       <Button className="py-6 w-full" variant="destructive" onClick={logout}>

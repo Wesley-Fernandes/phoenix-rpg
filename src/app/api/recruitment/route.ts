@@ -61,7 +61,6 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Check if the user has admin permissions
     const staffMember = await database.staff.findUnique({
       where: { userId },
     });

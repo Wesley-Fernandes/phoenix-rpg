@@ -22,7 +22,7 @@ export function ThemeSwitcher() {
     <Button onClick={toogle} variant="outline" className="w-full py-6">
       {(theme as THEME) == 'light' ? <Moon /> : <Sun />}
       <span>Tema {(theme as THEME) == 'light' ? 'Claro' : 'Escuro'}</span>
-      <Toaster theme={theme as "dark"|"light"|"system"}/>
+      <Toaster theme={theme as 'dark' | 'light' | 'system'} />
     </Button>
   );
 }
