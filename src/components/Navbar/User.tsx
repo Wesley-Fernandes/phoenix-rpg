@@ -5,6 +5,7 @@ import { Button } from '../ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useEffect, useState } from 'react';
 import { Badge } from '../ui/badge';
+import { QueryCache } from '@tanstack/react-query';
 
 type PermissionLevel = 'USER' | 'MODERATOR' | 'ADMIN';
 
@@ -33,6 +34,7 @@ export default function User() {
 
   const logout = async () => {
     await signOut();
+    new QueryCache().clear();
   };
 
   return (

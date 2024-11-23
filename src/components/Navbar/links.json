@@ -15,8 +15,12 @@
   ],
   "MODERATOR": [
     {
-      "label": "Administrar fichas",
-      "href": "/admin/record"
+      "label": "Gerenciar fichas",
+      "href": "/mod/record"
+    },
+    {
+      "label": "Gerenciar tarefas",
+      "href": "/mod/tasks"
     }
   ],
   "ADMINISTRATOR": [

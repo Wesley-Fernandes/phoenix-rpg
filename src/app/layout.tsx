@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import { ThemeProvider } from '@/components/Theme/ThemeProvider';
 import { ClerkProvider } from '@clerk/nextjs';
+import QueryProvider from '@/components/QueryProvider';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -32,14 +33,16 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem={false}
-          >
-            <Navbar />
-            {children}
-          </ThemeProvider>
+          <QueryProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem={false}
+            >
+              <Navbar />
+              {children}
+            </ThemeProvider>
+          </QueryProvider>
         </body>
       </html>
     </ClerkProvider>

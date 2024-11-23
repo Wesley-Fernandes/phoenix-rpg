@@ -3,6 +3,16 @@ import links from '@/components/Navbar/links.json';
 import database from '@/lib/prisma';
 import { auth } from '@clerk/nextjs/server';
 
+interface LinkProps {
+  label: string;
+  href: string;
+}
+export interface linksArrayProps {
+  unauthenticated?: LinkProps[];
+  user?: LinkProps[];
+  moderator?: LinkProps[];
+  administrator?: LinkProps[];
+}
 export async function GET() {
   const { userId } = await auth();
 
@@ -17,17 +27,17 @@ export async function GET() {
 
     const permissionLevel = staffMember ? staffMember.permission : 'USER';
 
-    let userLinks = [...links.authenticated];
+    let data: linksArrayProps = { user: links.authenticated };
 
     if (permissionLevel === 'MODERATOR' || permissionLevel === 'ADMIN') {
-      userLinks = [...userLinks, ...links.MODERATOR];
+      data.moderator = links.MODERATOR;
     }
 
     if (permissionLevel === 'ADMIN') {
-      userLinks = [...userLinks, ...links.ADMINISTRATOR];
+      data.administrator = links.ADMINISTRATOR;
     }
 
-    return NextResponse.json({ links: userLinks });
+    return NextResponse.json({ links: data });
   } catch (error) {
     console.error('Error fetching user links:', error);
     return NextResponse.json(
