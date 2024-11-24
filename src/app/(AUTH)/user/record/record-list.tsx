@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Record } from '@prisma/client';
+import { Edit, Eye, Trash2 } from 'lucide-react';
 
 export default function RecordList() {
   const [records, setRecords] = useState<Record[]>([]);
@@ -39,16 +40,20 @@ export default function RecordList() {
             <p>Raça: {record.race}</p>
             <p>Idade: {record.age}</p>
             <p>Status: {record.approved ? 'Aprovado' : 'Pendente'}</p>
-            <div className="mt-4 space-x-2">
+            <div className="mt-4 justify-end gap-6 flex items-center">
               <Link href={`/user/record/${record.id}`}>
-                <Button variant="outline">Editar</Button>
+                <Button variant="outline" size="icon"><Edit/></Button>
               </Link>
               <Button
-                variant="destructive"
+                variant="outline"
+                size="icon"
                 onClick={() => deleteRecord(record.id)}
               >
-                Excluir
+                <Trash2/>
               </Button>
+              <Link href={`/character/${record.id}`}>
+                <Button variant="outline" size="icon"><Eye/></Button>
+              </Link>
             </div>
           </CardContent>
         </Card>

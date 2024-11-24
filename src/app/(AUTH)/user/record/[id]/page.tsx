@@ -9,6 +9,7 @@ export default async function EditRecordPage({
 }: {
   params: { id: string };
 }) {
+  const {id} = await params;
   const { userId } = await auth();
 
   if (!userId) {
@@ -16,7 +17,7 @@ export default async function EditRecordPage({
   }
 
   const record = await database.record.findUnique({
-    where: { id: params.id },
+    where: { id },
   });
 
   if (!record || record.creatorId !== userId) {
