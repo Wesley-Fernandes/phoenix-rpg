@@ -10,8 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 
 async function getCharacter(id: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/public/records/${id}`,
+  const res = await fetch(`/api/public/records/${id}`,
     { method: 'GET', cache: 'no-store' }
   );
   const data = await res.json();
