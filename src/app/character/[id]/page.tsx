@@ -42,9 +42,9 @@ export default async function PublicCharacterPage({
               <CardDescription>{character.race}</CardDescription>
             </div>
             {character.approved ? (
-              <Badge variant="default">Aprovado</Badge>
+              <Badge variant="default" className='uppercase'>Aprovado</Badge>
             ) : (
-              <Badge variant="secondary">Não aprovado</Badge>
+              <Badge variant="secondary" className='uppercase'>Não aprovado</Badge>
             )}
           </div>
         </CardHeader>
