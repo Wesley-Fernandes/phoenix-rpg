@@ -1,12 +1,10 @@
 import database from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
-export async function GET(
-  request: NextResponse,
-  { params }: { params: { id: string } }
+export async function GET({ params }: { params: { id: string } }
 ) {
   try {
-    const { id } = await params;
+    const { id } = params;
     console.log(id);
     const record = await database.record.findUnique({
       where: { id: params.id },
