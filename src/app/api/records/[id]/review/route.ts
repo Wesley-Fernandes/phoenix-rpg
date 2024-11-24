@@ -9,10 +9,14 @@ async function getUserPermission(userId: string) {
   return staff?.permission || 'USER';
 }
 
+type ParamsProp = {
+  params: Promise<{ id: string }>
+}
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: ParamsProp
 ) {
+  const { id } = await params;
   const { userId } = await auth();
   if (!userId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -27,7 +31,7 @@ export async function POST(
     const { approved } = await request.json();
 
     const record = await database.record.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         approved,
         reviewedBy: userId,
