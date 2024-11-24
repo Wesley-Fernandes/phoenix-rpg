@@ -48,6 +48,28 @@ model Recruitment {
   comment     String
 }
 
+model Record {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  creatorId   String
+  aminoLink   String
+  name        String
+  race        String
+  photo       String
+  age         Int
+  height      String
+  weight      String
+  gender      String
+  fisionomy   String
+  history     String
+  powers      Json[]
+  skills      Json[]
+  approved    Boolean  @default(false)
+  reviewedBy  String?
+  reviewedAt  DateTime?
+}
+
 model Comment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   content   String
