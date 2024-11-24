@@ -1,15 +1,21 @@
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import RecordForm from '../record-form';
 import { Prisma } from '@prisma/client';
 import { auth } from '@clerk/nextjs/server';
 import database from '@/lib/prisma';
 
+
+type PageProps = {
+  params: Promise<{ id: string }>;
+};
 export default async function EditRecordPage({
   params,
-}: {
-  params: { id: string };
-}) {
+}: PageProps) {
   const {id} = await params;
+
+  if(!id){
+    notFound()
+  }
   const { userId } = await auth();
 
   if (!userId) {

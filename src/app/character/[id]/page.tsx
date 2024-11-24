@@ -9,6 +9,9 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 
+type PageProps = {
+  params: Promise<{ id: string }>;
+};
 async function getCharacter(id: string) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/public/records/${id}`,
     { method: 'GET', cache: 'no-store' }
@@ -19,9 +22,7 @@ async function getCharacter(id: string) {
 
 export default async function PublicCharacterPage({
   params,
-}: {
-  params: { id: string };
-}) {
+}:PageProps) {
   const { id } = await params;
   let character;
   try {
