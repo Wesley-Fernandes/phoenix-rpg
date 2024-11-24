@@ -1,13 +1,18 @@
 import database from '@/lib/prisma';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
+
+type ParamsProp = {
+  params: Promise<{ id: string }>
+}
 export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
+  request: Request,
+  { params }:ParamsProp
 ) {
   try {
+    const { id } = await params;
     const record = await database.record.findUnique({
-      where: { id: params.id },
+      where: { id },
       select: {
         id: true,
         name: true,
@@ -26,12 +31,9 @@ export async function GET(
       },
     });
 
+
     if (!record) {
       return NextResponse.json({ error: 'Record not found' }, { status: 404 });
-    }
-
-    if (!record.approved) {
-      return NextResponse.json({ error: 'This character sheet is not yet approved' }, { status: 403 });
     }
 
     return NextResponse.json(record);

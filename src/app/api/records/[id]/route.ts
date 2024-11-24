@@ -1,6 +1,6 @@
 import database from '@/lib/prisma';
 import { auth } from '@clerk/nextjs/server';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 async function getUserPermission(userId: string) {
   const staff = await database.staff.findUnique({
@@ -8,13 +8,15 @@ async function getUserPermission(userId: string) {
   });
   return staff?.permission || 'USER';
 }
-
+type ParamsProp = {
+  params: Promise<{ id: string }>
+}
 export async function GET(
-  request: Request,
-  context: { params: { id: string } }
+  request: NextRequest,
+  { params }: ParamsProp 
 ) {
 
-  const { params } = context;
+  const { id } = await params;
   const { userId } = await auth();
   if (!userId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -22,7 +24,7 @@ export async function GET(
 
   try {
     const record = await database.record.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!record) {
