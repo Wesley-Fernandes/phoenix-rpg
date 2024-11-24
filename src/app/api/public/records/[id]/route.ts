@@ -3,11 +3,10 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const { id } = params;
-    console.log(id);
+    const { params } = context;
     const record = await database.record.findUnique({
       where: { id: params.id },
       select: {

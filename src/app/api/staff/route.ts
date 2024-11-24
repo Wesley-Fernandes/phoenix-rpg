@@ -30,12 +30,6 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    /*
-    const { userId } = getAuth(req)
-    if (!userId || !(await isAdmin(userId))) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-    */
 
     const body = await req.json();
     const { name, permission, userId } = body;
