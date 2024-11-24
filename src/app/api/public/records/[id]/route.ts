@@ -3,10 +3,9 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const { params } = context;
     const record = await database.record.findUnique({
       where: { id: params.id },
       select: {
@@ -31,6 +30,10 @@ export async function GET(
       return NextResponse.json({ error: 'Record not found' }, { status: 404 });
     }
 
+    if (!record.approved) {
+      return NextResponse.json({ error: 'This character sheet is not yet approved' }, { status: 403 });
+    }
+
     return NextResponse.json(record);
   } catch (error) {
     console.error('Error fetching public record:', error);
@@ -40,3 +43,4 @@ export async function GET(
     );
   }
 }
+
