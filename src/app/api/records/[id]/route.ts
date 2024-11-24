@@ -102,16 +102,17 @@ export async function PUT(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: ParamsProp
 ) {
   const { userId } = await auth();
+  const {id} = await params;
   if (!userId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
     const record = await database.record.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!record) {
@@ -127,7 +128,7 @@ export async function DELETE(
     }
 
     await database.record.delete({
-      where: { id: params.id },
+      where: { id },
     });
     return NextResponse.json({ message: 'Record deleted successfully' });
   } catch (error) {
