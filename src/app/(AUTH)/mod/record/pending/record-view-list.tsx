@@ -49,7 +49,7 @@ export default function RecordReviewList() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ action }),
+        body: JSON.stringify({ approved: action }),
       });
 
       if (!response.ok) throw new Error('Failed to review record');
@@ -61,7 +61,6 @@ export default function RecordReviewList() {
       // Remove the reviewed record from the list
       setRecords(records.filter((record) => record.id !== id));
 
-      // If this was the last record on the page, go to the previous page
       if (records.length === 1 && currentPage > 1) {
         setCurrentPage(currentPage - 1);
       } else {

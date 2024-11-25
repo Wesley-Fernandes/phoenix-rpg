@@ -67,18 +67,17 @@ export async function PUT(request: Request, { params }: ParamsProp) {
     const userPermission = await getUserPermission(userId);
     if (
       existingRecord.creatorId !== userId &&
-      !['MODERATOR', 'ADMINISTRATOR'].includes(userPermission)
+      !['MODERATOR', 'ADMIN'].includes(userPermission)
     ) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    // Check if powers or skills have changed and the record was previously approved
     if (
       existingRecord.approved &&
       (JSON.stringify(body.powers) !== JSON.stringify(existingRecord.powers) ||
         JSON.stringify(body.skills) !== JSON.stringify(existingRecord.skills))
     ) {
-      body.approved = false;
+      body.approved = 'PENDING';
     }
 
     const record = await database.record.update({
