@@ -4,17 +4,14 @@ import { Prisma } from '@prisma/client';
 import { auth } from '@clerk/nextjs/server';
 import database from '@/lib/prisma';
 
-
 type PageProps = {
   params: Promise<{ id: string }>;
 };
-export default async function EditRecordPage({
-  params,
-}: PageProps) {
-  const {id} = await params;
+export default async function EditRecordPage({ params }: PageProps) {
+  const { id } = await params;
 
-  if(!id){
-    notFound()
+  if (!id) {
+    notFound();
   }
   const { userId } = await auth();
 

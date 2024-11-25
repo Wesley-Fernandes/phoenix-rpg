@@ -10,12 +10,9 @@ async function getUserPermission(userId: string) {
 }
 
 type ParamsProp = {
-  params: Promise<{ id: string }>
-}
-export async function POST(
-  request: Request,
-  { params }: ParamsProp
-) {
+  params: Promise<{ id: string }>;
+};
+export async function POST(request: Request, { params }: ParamsProp) {
   const { id } = await params;
   const { userId } = await auth();
   if (!userId) {
@@ -24,7 +21,7 @@ export async function POST(
 
   try {
     const userPermission = await getUserPermission(userId);
-    if (!['MODERATOR', 'ADMINISTRATOR'].includes(userPermission)) {
+    if (!['MODERATOR', 'ADMIN'].includes(userPermission)) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 

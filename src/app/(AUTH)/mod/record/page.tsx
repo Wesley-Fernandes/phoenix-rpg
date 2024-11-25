@@ -23,10 +23,10 @@ export default function page() {
         <CardContent>
           <ul className="flex flex-col">
             <li>
-              <Link href="/admin/record/search">Procurar uma fichas</Link>
+              <Link href="/mod/record/search">Procurar uma fichas</Link>
             </li>
             <li>
-              <Link href="/admin/record/feed">
+              <Link href="/mod/record/pending">
                 Ultimas solicitações de aprovação
               </Link>
             </li>

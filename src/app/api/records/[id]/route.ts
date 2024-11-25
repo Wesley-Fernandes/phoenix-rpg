@@ -8,14 +8,12 @@ async function getUserPermission(userId: string) {
   });
   return staff?.permission || 'USER';
 }
-type ParamsProp = {
-  params: Promise<{ id: string }>
-}
-export async function GET(
-  request: NextRequest,
-  { params }: ParamsProp 
-) {
 
+type ParamsProp = {
+  params: Promise<{ id: string }>;
+};
+
+export async function GET(request: NextRequest, { params }: ParamsProp) {
   const { id } = await params;
   const { userId } = await auth();
   if (!userId) {
@@ -49,12 +47,9 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  request: Request,
-  { params }: ParamsProp
-) {
+export async function PUT(request: Request, { params }: ParamsProp) {
   const { userId } = await auth();
-  const {id} = await params;
+  const { id } = await params;
   if (!userId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
@@ -87,7 +82,7 @@ export async function PUT(
     }
 
     const record = await database.record.update({
-      where: { id},
+      where: { id },
       data: body,
     });
     return NextResponse.json(record);
@@ -100,12 +95,9 @@ export async function PUT(
   }
 }
 
-export async function DELETE(
-  request: Request,
-  { params }: ParamsProp
-) {
+export async function DELETE(request: Request, { params }: ParamsProp) {
   const { userId } = await auth();
-  const {id} = await params;
+  const { id } = await params;
   if (!userId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }

@@ -48,6 +48,11 @@ model Recruitment {
   comment     String
 }
 
+enum RecordStatus{
+  PENDING
+  APPROVED
+  REJECTED
+}
 model Record {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt   DateTime @default(now())
@@ -65,7 +70,7 @@ model Record {
   history     String
   powers      Json[]
   skills      Json[]
-  approved    Boolean  @default(false)
+  approved    RecordStatus @default(PENDING)
   reviewedBy  String?
   reviewedAt  DateTime?
 }

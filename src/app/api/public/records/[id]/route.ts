@@ -1,14 +1,10 @@
 import database from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
-
 type ParamsProp = {
-  params: Promise<{ id: string }>
-}
-export async function GET(
-  request: Request,
-  { params }:ParamsProp
-) {
+  params: Promise<{ id: string }>;
+};
+export async function GET(request: Request, { params }: ParamsProp) {
   try {
     const { id } = await params;
     const record = await database.record.findUnique({
@@ -31,7 +27,6 @@ export async function GET(
       },
     });
 
-
     if (!record) {
       return NextResponse.json({ error: 'Record not found' }, { status: 404 });
     }
@@ -45,4 +40,3 @@ export async function GET(
     );
   }
 }
-

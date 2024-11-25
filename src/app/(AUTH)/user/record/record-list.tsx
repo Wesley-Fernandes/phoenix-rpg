@@ -42,17 +42,21 @@ export default function RecordList() {
             <p>Status: {record.approved ? 'Aprovado' : 'Pendente'}</p>
             <div className="mt-4 justify-end gap-6 flex items-center">
               <Link href={`/user/record/${record.id}`}>
-                <Button variant="outline" size="icon"><Edit/></Button>
+                <Button variant="outline" size="icon">
+                  <Edit />
+                </Button>
               </Link>
               <Button
                 variant="outline"
                 size="icon"
                 onClick={() => deleteRecord(record.id)}
               >
-                <Trash2/>
+                <Trash2 />
               </Button>
               <Link href={`/character/${record.id}`}>
-                <Button variant="outline" size="icon"><Eye/></Button>
+                <Button variant="outline" size="icon">
+                  <Eye />
+                </Button>
               </Link>
             </div>
           </CardContent>

@@ -13,16 +13,15 @@ type PageProps = {
   params: Promise<{ id: string }>;
 };
 async function getCharacter(id: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/public/records/${id}`,
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/public/records/${id}`,
     { method: 'GET', cache: 'no-store' }
   );
   const data = await res.json();
   return data;
 }
 
-export default async function PublicCharacterPage({
-  params,
-}:PageProps) {
+export default async function PublicCharacterPage({ params }: PageProps) {
   const { id } = await params;
   let character;
   try {
@@ -41,10 +40,20 @@ export default async function PublicCharacterPage({
               <CardTitle className="text-3xl">{character.name}</CardTitle>
               <CardDescription>{character.race}</CardDescription>
             </div>
-            {character.approved ? (
-              <Badge variant="default" className='uppercase'>Aprovado</Badge>
-            ) : (
-              <Badge variant="secondary" className='uppercase'>Não aprovado</Badge>
+            {character.approved === 'PENDING' && (
+              <Badge className="uppercase bg-yellow-300 hover:bg-yellow-600">
+                Pendente
+              </Badge>
+            )}
+            {character.approved === 'APPROVED' && (
+              <Badge className="uppercase bg-green-600 hover:bg-green-800">
+                Aprovado
+              </Badge>
+            )}
+            {character.approved === 'REJECTED' && (
+              <Badge className="uppercase bg-red-500 hover:bg-red-800">
+                Rejeitado
+              </Badge>
             )}
           </div>
         </CardHeader>
