@@ -1,34 +1,6 @@
-import { getAuth } from '@clerk/nextjs/server';
 import database from '@/lib/prisma';
+import { getAuth } from '@clerk/nextjs/server';
 import { NextRequest, NextResponse } from 'next/server';
-
-export async function POST(request: NextRequest) {
-  try {
-    const { userId } = getAuth(request);
-    if (!userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const { aminoLink, questions, comment } = await request.json();
-
-    const recruitment = await database.recruitment.create({
-      data: {
-        creatorId: userId,
-        aminoLink,
-        questions,
-        comment,
-      },
-    });
-
-    return NextResponse.json(recruitment, { status: 201 });
-  } catch (error) {
-    console.error('Error creating recruitment:', error);
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    );
-  }
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -69,7 +41,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    await database.recruitment.deleteMany({});
+    await database.recruitment.deleteMany();
 
     return NextResponse.json({
       message: 'All recruitments deleted successfully',

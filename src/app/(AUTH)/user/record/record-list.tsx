@@ -1,45 +1,65 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Record } from '@prisma/client';
-import { Edit, Eye, Trash2 } from 'lucide-react';
+import { Edit, Eye, Plus, Trash2 } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 
 export default function RecordList() {
-  const [records, setRecords] = useState<Record[]>([]);
-
-  useEffect(() => {
-    async function fetchRecords() {
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ['user-records'],
+    queryFn: async () => {
       const response = await fetch('/api/records');
       const data = await response.json();
-      setRecords(data);
-    }
-    fetchRecords();
-  }, []);
+      return data as Record[];
+    },
+  });
 
   async function deleteRecord(id: string) {
     if (confirm('Tem certeza que deseja excluir esta ficha?')) {
       await fetch(`/api/records/${id}`, { method: 'DELETE' });
-      setRecords(records.filter((record) => record.id !== id));
+      refetch();
     }
+  }
+
+  if (isLoading) {
+    return <p>Carregando...</p>;
+  }
+
+  if (isError || !data) {
+    return (
+      <p>Houve um erro ao carregar as fichas. Tente novamente mais tarde.</p>
+    );
+  }
+
+  if (data.length < 1) {
+    return <p>Você não possui fichas cadastradas.</p>;
   }
 
   return (
     <div className="space-y-6">
       <Link href="/user/record/new">
-        <Button>Criar Nova Ficha</Button>
+        <Button size="icon">
+          <Plus />
+        </Button>
       </Link>
-      {records.map((record) => (
+      {data.map((record) => (
         <Card key={record.id}>
           <CardHeader>
-            <CardTitle>{record.name}</CardTitle>
+            <CardTitle className="text-2xl">{record.name}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>Raça: {record.race}</p>
-            <p>Idade: {record.age}</p>
-            <p>Status: {record.approved ? 'Aprovado' : 'Pendente'}</p>
+            <p>
+              <strong>Raça:</strong> {record.race}
+            </p>
+            <p>
+              <strong>Idade:</strong> {record.age}
+            </p>
+            <p>
+              <strong>Status:</strong> {record.approved}
+            </p>
             <div className="mt-4 justify-end gap-6 flex items-center">
               <Link href={`/user/record/${record.id}`}>
                 <Button variant="outline" size="icon">

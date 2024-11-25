@@ -24,7 +24,7 @@ export default async function Page() {
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl font-bold mb-6">Revisar Fichas Pendentes</h1>
+      <h1 className="text-3xl font-bold mb-6">Fichas Pendentes</h1>
       <RecordReviewList />
     </div>
   );

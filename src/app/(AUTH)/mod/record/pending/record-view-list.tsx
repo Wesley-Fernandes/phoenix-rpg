@@ -11,6 +11,8 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 import { toast } from 'sonner';
+import { useQuery } from '@tanstack/react-query';
+import { Repeat } from 'lucide-react';
 
 interface Record {
   id: string;
@@ -20,27 +22,16 @@ interface Record {
 }
 
 export default function RecordReviewList() {
-  const [records, setRecords] = useState<Record[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const router = useRouter();
-
-  useEffect(() => {
-    fetchRecords();
-  }, [currentPage]);
-
-  async function fetchRecords() {
-    try {
-      const response = await fetch(`/api/records/pending?page=${currentPage}`);
-      if (!response.ok) throw new Error('Failed to fetch records');
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ['records-pendings'],
+    queryFn: async () => {
+      const response = await fetch('/api/admin/records/pending');
       const data = await response.json();
-      setRecords(data.records);
-      setTotalPages(data.totalPages);
-    } catch (error) {
-      console.error('Error fetching records:', error);
-      toast('Falha ao carregar as fichas pendentes.');
-    }
-  }
+      return data as Record[];
+    },
+  });
+
+  const router = useRouter();
 
   async function reviewRecord(id: string, action: 'APPROVED' | 'REJECTED') {
     try {
@@ -58,23 +49,20 @@ export default function RecordReviewList() {
         `A ficha foi ${action === 'APPROVED' ? 'aprovada' : 'rejeitada'} com sucesso.`
       );
 
-      // Remove the reviewed record from the list
-      setRecords(records.filter((record) => record.id !== id));
-
-      if (records.length === 1 && currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-      } else {
-        fetchRecords();
-      }
+      refetch();
     } catch (error) {
       console.error('Error reviewing record:', error);
       toast('Falha ao revisar a ficha.');
     }
   }
 
+  if (isLoading) {
+    return <div>Carregando...</div>;
+  }
+
   return (
     <div className="space-y-6">
-      {records.map((record) => (
+      {data?.map((record) => (
         <Card key={record.id}>
           <CardHeader>
             <CardTitle>{record.name}</CardTitle>
@@ -105,23 +93,12 @@ export default function RecordReviewList() {
           </CardContent>
         </Card>
       ))}
-      {records.length === 0 && (
+      {data?.length === 0 && (
         <p className="text-center">Não há fichas pendentes para revisão.</p>
       )}
       <div className="flex justify-center space-x-2 mt-4">
-        <Button
-          onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
-          disabled={currentPage === 1}
-        >
-          Anterior
-        </Button>
-        <Button
-          onClick={() =>
-            setCurrentPage((page) => Math.min(totalPages, page + 1))
-          }
-          disabled={currentPage === totalPages}
-        >
-          Próxima
+        <Button size="icon" variant="outline" onClick={() => refetch()}>
+          <Repeat />
         </Button>
       </div>
     </div>

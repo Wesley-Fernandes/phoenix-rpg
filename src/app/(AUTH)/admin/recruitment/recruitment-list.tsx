@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-interface RecruitmentListProps {
+export interface RecruitmentListProps {
   recruitments: Recruitment[];
 }
 
@@ -26,7 +26,7 @@ export default function RecruitmentList({
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {recruitments.map((recruitment) => (
+      {recruitments?.map((recruitment) => (
         <Card key={recruitment.id} className="flex flex-col justify-between">
           <CardHeader>
             <CardTitle>Candidato {recruitment.creatorId}</CardTitle>
