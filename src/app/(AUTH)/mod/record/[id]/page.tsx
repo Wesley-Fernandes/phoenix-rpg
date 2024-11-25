@@ -18,11 +18,11 @@ async function getUserPermission(userId: string) {
   return staff?.permission || 'USER';
 }
 
-export default async function RecordDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+type ParamsProp = {
+  params: Promise<{ id: string }>;
+};
+export default async function RecordDetailPage({ params }: ParamsProp) {
+  const { id } = await params;
   const { userId } = await auth();
 
   if (!userId) {
@@ -35,7 +35,7 @@ export default async function RecordDetailPage({
   }
 
   const record = await database.record.findUnique({
-    where: { id: params.id },
+    where: { id },
   });
 
   if (!record) {
