@@ -98,7 +98,7 @@ export default function RecruitmentForm() {
       .filter((key) => key.startsWith('question'))
       .map((key) => values[key as keyof typeof values]);
 
-    await fetch('/api/recruitment', {
+    const res = await fetch('/api/public/recruitment', {
       method: 'POST',
       body: JSON.stringify({
         questions,
@@ -110,14 +110,24 @@ export default function RecruitmentForm() {
       },
     });
 
-    toast.success(
-      'Obrigado por sua candidatura. Entraremos em contato em breve.'
-    );
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      push('/');
-    }, 2000);
+    if(res.status === 201){
+      toast.success(
+        'Obrigado por sua candidatura. Entraremos em contato em breve.'
+      );
+  
+      setTimeout(() => {
+        setIsSubmitting(false);
+        push('/');
+      }, 2000);
+    }else{
+      toast.error(
+        'Houve um erro, tente novamente.'
+      );
+
+      setIsSubmitting(false)
+    }
+
   }
 
   const questions = [
